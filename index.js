@@ -14,7 +14,14 @@ async function main() {
         await client.connect();
         
         // Call the 'listDatabases' function, passing the client as an argument
-        await listDatabases(client)
+        // await listDatabases(client)
+
+        //call the 'creaListing' function, pass the client as an argument and json 
+        await createListing(client, {
+            name: "redtro Llacuna",
+            quotes: "may node be the express with you!",
+            regular: 1
+        })
     }catch(e){
         // If there is an error, log it to the console
         console.error(e);
@@ -27,6 +34,11 @@ async function main() {
 // Call the 'main' function, and log any errors to the console
 main().catch(console.error);
 
+//create a function to insert a new record 
+async function createListing(client, newListing){
+    const result = await client.db('test').collection('user').insertOne(newListing)
+    console.log(`New listing created with the following id: ${result.insertedId}`)
+}
 // Define an asynchronous function called 'listDatabases', which takes the 'client' object as a parameter
 async function listDatabases(client){
     // Use the 'admin' method to get information about the server's administrative databases
